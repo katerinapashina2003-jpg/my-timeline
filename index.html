@@ -1,62 +1,44 @@
-
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>ОТ ЭВМ К AI</title>
+  <title>От ЭВМ к AI</title>
 
-  <!-- Базовые стили TimelineJS -->
+  <!-- 1. Основные стили TimelineJS -->
   <link
     rel="stylesheet"
     href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css"
   >
 
-  
-<style>
-  /* Цвета интерфейса TimelineJS */
-  .tl-timeline {
-    color: #172B4D !important;
-    background: #FAF8F3 !important;
-  }
-
-  .tl-timeline .tl-text,
-  .tl-timeline .tl-text-content {
-    color: #334765 !important;
-  }
-
-  .tl-timeline .tl-headline,
-  .tl-timeline .tl-headline-title {
-    color: #172B4D !important;
-  }
-
-  .tl-timeline .tl-headline-date {
-    color: #087E8B !important;
-  }
-
-  .tl-timeline a {
-    color: #06636D !important;
-  }
-</style>
-
-
-  <!-- Твоя тема с GitHub Gist -->
+  <!-- 2. Твоя тема с GitHub Gist -->
   <link
     rel="stylesheet"
     href="https://gist.githubusercontent.com/katerinapashina2003-jpg/8473226532dce57791d51bbb49dfdcce/raw/timeline-elegant-theme.css"
   >
 
-  <!-- Дополнительное оформление страницы -->
+  <!-- 3. Стили страницы и исправление цветов TimelineJS -->
   <style>
     * {
       box-sizing: border-box;
     }
 
+    :root {
+      --tl-ink: #000000;
+      --tl-text: #263445;
+      --tl-teal: #06636D;
+      --tl-amber: #B86E00;
+      --tl-paper: #FAF8F3;
+      --tl-white: #FFFFFF;
+      --tl-line: #B9C9D3;
+    }
+
     body {
       margin: 0;
-      background: #FAF8F3;
-      color: #172B4D;
+      background: var(--tl-paper);
+      color: var(--tl-ink);
       font-family: Georgia, "Times New Roman", serif;
     }
 
@@ -67,7 +49,7 @@
     }
 
     .eyebrow {
-      color: #087E8B;
+      color: var(--tl-teal);
       font: 600 12px/1.5 Arial, sans-serif;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -75,6 +57,7 @@
 
     .page-header h1 {
       margin: 12px 0;
+      color: #000000;
       font-size: clamp(30px, 5vw, 52px);
       line-height: 1.1;
       font-weight: 500;
@@ -89,7 +72,92 @@
     #timeline-embed {
       width: 100%;
       height: 650px;
-      background: #FAF8F3;
+      background: var(--tl-paper);
+    }
+
+    /*
+      4. Переопределяем цвета внутри TimelineJS.
+      Эти правила идут после обеих таблиц стилей,
+      поэтому должны иметь приоритет.
+    */
+
+    #timeline-embed .tl-timeline,
+    #timeline-embed .tl-storyslider,
+    #timeline-embed .tl-slide,
+    #timeline-embed .tl-slide-content,
+    #timeline-embed .tl-text,
+    #timeline-embed .tl-text-content,
+    #timeline-embed .tl-timenav,
+    #timeline-embed .tl-timenav-background,
+    #timeline-embed .tl-timeaxis {
+      color: var(--tl-ink) !important;
+      background-color: var(--tl-paper) !important;
+    }
+
+    /* Главные заголовки и заголовки событий — чёрные */
+    #timeline-embed .tl-headline,
+    #timeline-embed .tl-headline-title,
+    #timeline-embed .tl-headline-date,
+    #timeline-embed .tl-headline h1,
+    #timeline-embed .tl-headline h2,
+    #timeline-embed .tl-slide-content h1,
+    #timeline-embed .tl-slide-content h2,
+    #timeline-embed .tl-slide-content h3,
+    #timeline-embed .tl-text h1,
+    #timeline-embed .tl-text h2,
+    #timeline-embed .tl-text h3 {
+      color: #000000 !important;
+    }
+
+    /* Основной текст */
+    #timeline-embed .tl-text-content,
+    #timeline-embed .tl-text-content p,
+    #timeline-embed .tl-slide-content p,
+    #timeline-embed .tl-slide-content li,
+    #timeline-embed .tl-caption,
+    #timeline-embed .tl-credit {
+      color: var(--tl-text) !important;
+    }
+
+    /* Подписи событий на нижней временной шкале */
+    #timeline-embed .tl-timemarker-text,
+    #timeline-embed .tl-timemarker-text h2,
+    #timeline-embed .tl-timemarker-text h2 a,
+    #timeline-embed .tl-timeaxis-tick-text,
+    #timeline-embed .tl-timeaxis-major .tl-timeaxis-tick-text,
+    #timeline-embed .tl-timeaxis-minor .tl-timeaxis-tick-text,
+    #timeline-embed .tl-group,
+    #timeline-embed .tl-timegroup-message {
+      color: #000000 !important;
+    }
+
+    /* Фон карточек событий */
+    #timeline-embed .tl-slide,
+    #timeline-embed .tl-slide-content,
+    #timeline-embed .tl-timemarker-content-container {
+      background-color: #FFFFFF !important;
+    }
+
+    /* Линии временной шкалы */
+    #timeline-embed .tl-timeaxis,
+    #timeline-embed .tl-timeaxis .tl-timeaxis-line,
+    #timeline-embed .tl-timemarker,
+    #timeline-embed .tl-timemarker-line,
+    #timeline-embed .tl-timemarker-timespan {
+      border-color: var(--tl-line) !important;
+    }
+
+    /* Ссылки и элементы навигации */
+    #timeline-embed a,
+    #timeline-embed a:visited,
+    #timeline-embed .tl-menubar-button,
+    #timeline-embed .tl-slidenav-content {
+      color: var(--tl-teal) !important;
+    }
+
+    #timeline-embed a:hover,
+    #timeline-embed a:focus {
+      color: var(--tl-amber) !important;
     }
 
     .page-footer {
@@ -114,32 +182,31 @@
 <body>
   <header class="page-header">
     <div class="eyebrow">Как меняется работа историка?</div>
-    <h1>My Timeline</h1>
+    <h1>От ЭВМ к AI</h1>
     <p>
       Explore the events, people and moments that shaped this story.
     </p>
   </header>
 
-  <!-- Здесь TimelineJS отобразит события из Google Sheets -->
+  <!-- TimelineJS разместит события в этом контейнере -->
   <div id="timeline-embed"></div>
 
   <footer class="page-footer">
     Timeline · An interactive visual story
   </footer>
 
-  <!-- Библиотека TimelineJS -->
+  <!-- 5. Библиотека TimelineJS -->
   <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
 
-  <!-- Подключение Google-таблицы -->
+  <!-- 6. Загрузка событий из Google Sheets -->
   <script>
     const spreadsheetURL =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_yaxgsHiYvgPU2TDFuC4d599W2DTZCVeo4C4M91adaPYFLxKlEU0VJTjnWHAW_IcHv-ALZleQhsai/pubhtml";
 
     const options = {
-  initial_zoom: 2,
-  language: "en",
-  theme: "https://gist.githubusercontent.com/katerinapashina2003-jpg/8473226532dce57791d51bbb49dfdcce/raw/timeline-elegant-theme.css"
-};
+      initial_zoom: 2,
+      language: "en"
+    };
 
     const timeline = new TL.Timeline(
       "timeline-embed",
@@ -149,5 +216,4 @@
   </script>
 </body>
 </html>
-
-
+```
