@@ -13,6 +13,34 @@
     href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css"
   >
 
+  
+<style>
+  /* Цвета интерфейса TimelineJS */
+  .tl-timeline {
+    color: #172B4D !important;
+    background: #FAF8F3 !important;
+  }
+
+  .tl-timeline .tl-text,
+  .tl-timeline .tl-text-content {
+    color: #334765 !important;
+  }
+
+  .tl-timeline .tl-headline,
+  .tl-timeline .tl-headline-title {
+    color: #172B4D !important;
+  }
+
+  .tl-timeline .tl-headline-date {
+    color: #087E8B !important;
+  }
+
+  .tl-timeline a {
+    color: #06636D !important;
+  }
+</style>
+
+
   <!-- Твоя тема с GitHub Gist -->
   <link
     rel="stylesheet"
@@ -108,9 +136,10 @@
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_yaxgsHiYvgPU2TDFuC4d599W2DTZCVeo4C4M91adaPYFLxKlEU0VJTjnWHAW_IcHv-ALZleQhsai/pubhtml";
 
     const options = {
-      initial_zoom: 2,
-      language: "en"
-    };
+  initial_zoom: 2,
+  language: "en",
+  theme: "https://gist.githubusercontent.com/katerinapashina2003-jpg/8473226532dce57791d51bbb49dfdcce/raw/timeline-elegant-theme.css"
+};
 
     const timeline = new TL.Timeline(
       "timeline-embed",
