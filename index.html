@@ -1,11 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>От ЭВМ к AI</title>
+  <title>От ЭВМ к AI — интерактивный таймлайн</title>
 
   <!-- 1. Основные стили TimelineJS -->
   <link
@@ -28,57 +27,224 @@
     :root {
       --tl-ink: #000000;
       --tl-text: #263445;
+      --tl-muted: #52657D;
       --tl-teal: #06636D;
+      --tl-teal-dark: #04464D;
       --tl-amber: #B86E00;
       --tl-paper: #FAF8F3;
-      --tl-white: #FFFFFF;
+      --tl-card: #FFFFFF;
       --tl-line: #B9C9D3;
+      --tl-soft: #E8EEF1;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
-      background: var(--tl-paper);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(6, 99, 109, 0.07), transparent 34%),
+        radial-gradient(circle at 88% 8%, rgba(184, 110, 0, 0.07), transparent 30%),
+        var(--tl-paper);
       color: var(--tl-ink);
       font-family: Georgia, "Times New Roman", serif;
     }
 
-    .page-header {
+    /* Шапка */
+    .page-shell {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 38px 28px 24px;
+      padding: 0 24px;
+    }
+
+    .page-header {
+      position: relative;
+      margin: 34px auto 26px;
+      padding: 40px 44px;
+      border: 1px solid rgba(6, 99, 109, 0.18);
+      border-radius: 22px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F4F8F8 100%);
+      box-shadow: 0 18px 45px rgba(38, 52, 69, 0.08);
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(6, 99, 109, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 99, 109, 0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .header-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 34px;
+      align-items: center;
     }
 
     .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       color: var(--tl-teal);
-      font: 600 12px/1.5 Arial, sans-serif;
-      letter-spacing: 0.16em;
+      font: 700 12px/1.5 Arial, sans-serif;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
     }
 
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: var(--tl-teal);
+      border-radius: 2px;
+    }
+
     .page-header h1 {
-      margin: 12px 0;
+      margin: 16px 0 14px;
       color: #000000;
-      font-size: clamp(30px, 5vw, 52px);
-      line-height: 1.1;
+      font-size: clamp(34px, 5.2vw, 58px);
+      line-height: 1.05;
       font-weight: 500;
+      letter-spacing: -0.02em;
     }
 
     .page-header p {
-      max-width: 680px;
-      color: #52657D;
-      font: 16px/1.7 Arial, sans-serif;
+      max-width: 620px;
+      margin: 0;
+      color: var(--tl-muted);
+      font: 17px/1.7 Arial, sans-serif;
+    }
+
+    .header-note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid rgba(6, 99, 109, 0.2);
+      border-radius: 999px;
+      background: #FFFFFF;
+      color: var(--tl-teal-dark);
+      font: 600 12px/1 Arial, sans-serif;
+      letter-spacing: 0.04em;
+    }
+
+    .chip span {
+      font-size: 14px;
+    }
+
+    /* Иллюстрация в шапке */
+    .header-art {
+      position: relative;
+      min-height: 210px;
+      border-radius: 18px;
+      background:
+        linear-gradient(145deg, rgba(6, 99, 109, 0.12), rgba(184, 110, 0, 0.10)),
+        #FFFFFF;
+      border: 1px solid rgba(6, 99, 109, 0.15);
+      overflow: hidden;
+    }
+
+    .header-art img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 210px;
+      object-fit: cover;
+      mix-blend-mode: multiply;
+      opacity: 0.9;
+    }
+
+    .art-caption {
+      position: absolute;
+      left: 14px;
+      bottom: 12px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--tl-teal-dark);
+      font: 600 11px/1 Arial, sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      box-shadow: 0 6px 18px rgba(38, 52, 69, 0.12);
+    }
+
+    /* Подсказки */
+    .guide {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 0 auto 26px;
+    }
+
+    .guide-card {
+      padding: 18px 20px;
+      border: 1px solid rgba(6, 99, 109, 0.14);
+      border-radius: 16px;
+      background: var(--tl-card);
+      box-shadow: 0 8px 22px rgba(38, 52, 69, 0.05);
+    }
+
+    .guide-card h2 {
+      margin: 0 0 7px;
+      color: var(--tl-ink);
+      font: 600 16px/1.3 Arial, sans-serif;
+    }
+
+    .guide-card p {
+      margin: 0;
+      color: var(--tl-muted);
+      font: 13.5px/1.55 Arial, sans-serif;
+    }
+
+    .guide-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      background: rgba(6, 99, 109, 0.09);
+      color: var(--tl-teal);
+      font-size: 16px;
+    }
+
+    /* Таймлайн */
+    .timeline-frame {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 30px;
+    }
+
+    .timeline-card {
+      border: 1px solid rgba(6, 99, 109, 0.16);
+      border-radius: 22px;
+      background: var(--tl-card);
+      box-shadow: 0 22px 60px rgba(38, 52, 69, 0.10);
+      overflow: hidden;
     }
 
     #timeline-embed {
       width: 100%;
-      height: 650px;
+      height: 700px;
       background: var(--tl-paper);
     }
 
     /*
       4. Переопределяем цвета внутри TimelineJS.
-      Эти правила идут после обеих таблиц стилей,
-      поэтому должны иметь приоритет.
     */
 
     #timeline-embed .tl-timeline,
@@ -107,6 +273,7 @@
     #timeline-embed .tl-text h2,
     #timeline-embed .tl-text h3 {
       color: #000000 !important;
+      letter-spacing: -0.01em;
     }
 
     /* Основной текст */
@@ -117,6 +284,8 @@
     #timeline-embed .tl-caption,
     #timeline-embed .tl-credit {
       color: var(--tl-text) !important;
+      font-family: Arial, sans-serif !important;
+      line-height: 1.65 !important;
     }
 
     /* Подписи событий на нижней временной шкале */
@@ -138,6 +307,13 @@
       background-color: #FFFFFF !important;
     }
 
+    /* Картинки в событиях */
+    #timeline-embed .tl-media img,
+    #timeline-embed .tl-media .tl-media-image {
+      border-radius: 14px !important;
+      box-shadow: 0 12px 30px rgba(38, 52, 69, 0.12) !important;
+    }
+
     /* Линии временной шкалы */
     #timeline-embed .tl-timeaxis,
     #timeline-embed .tl-timeaxis .tl-timeaxis-line,
@@ -145,6 +321,12 @@
     #timeline-embed .tl-timemarker-line,
     #timeline-embed .tl-timemarker-timespan {
       border-color: var(--tl-line) !important;
+    }
+
+    /* Активная отметка на шкале */
+    #timeline-embed .tl-timemarker-active .tl-timemarker-content-container {
+      border-color: var(--tl-teal) !important;
+      box-shadow: 0 0 0 3px rgba(6, 99, 109, 0.12) !important;
     }
 
     /* Ссылки и элементы навигации */
@@ -160,39 +342,128 @@
       color: var(--tl-amber) !important;
     }
 
+    /* Футер */
     .page-footer {
-      padding: 18px 24px 28px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px 24px 34px;
+      border-top: 1px solid rgba(6, 99, 109, 0.14);
       text-align: center;
-      color: #52657D;
-      font: 12px/1.6 Arial, sans-serif;
+      color: var(--tl-muted);
+      font: 12.5px/1.6 Arial, sans-serif;
     }
 
-    @media (max-width: 600px) {
-      .page-header {
-        padding: 26px 18px 18px;
+    .page-footer strong {
+      color: var(--tl-teal-dark);
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .header-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .header-art {
+        min-height: 180px;
+      }
+
+      .guide {
+        grid-template-columns: 1fr;
       }
 
       #timeline-embed {
-        height: 600px;
+        height: 620px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .page-shell,
+      .timeline-frame {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .page-header {
+        margin-top: 20px;
+        padding: 28px 22px;
+        border-radius: 18px;
+      }
+
+      .page-header h1 {
+        font-size: clamp(30px, 9vw, 42px);
+      }
+
+      .header-art {
+        min-height: 150px;
+      }
+
+      #timeline-embed {
+        height: 560px;
       }
     }
   </style>
 </head>
 
 <body>
-  <header class="page-header">
-    <div class="eyebrow">Как меняется работа историка?</div>
-    <h1>От ЭВМ к AI</h1>
-    <p>
-      Explore the events, people and moments that shaped this story.
-    </p>
+  <header class="page-shell">
+    <section class="page-header">
+      <div class="header-inner">
+        <div>
+          <div class="eyebrow">Как меняется работа историка?</div>
+          <h1>От ЭВМ к AI</h1>
+          <p>
+            Explore the events, people and moments that shaped this story.
+          </p>
+
+          <div class="header-note">
+            <div class="chip"><span>🕰️</span> Интерактивная шкала</div>
+            <div class="chip"><span>🖱️</span> Листайте события</div>
+            <div class="chip"><span>🔍</span> Приближайте периоды</div>
+          </div>
+        </div>
+
+        <figure class="header-art">
+          <img
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80"
+            alt="Иллюстрация: развитие вычислительной техники и искусственного интеллекта"
+          >
+          <figcaption class="art-caption">ЭВМ → Digital Humanities → AI</figcaption>
+        </figure>
+      </div>
+    </section>
   </header>
 
+  <section class="page-shell">
+    <div class="guide">
+      <article class="guide-card">
+        <div class="guide-icon">📖</div>
+        <h2>О чём таймлайн</h2>
+        <p>Ключевые события, люди и технологии, которые меняли работу историка.</p>
+      </article>
+
+      <article class="guide-card">
+        <div class="guide-icon">🧭</div>
+        <h2>Как ориентироваться</h2>
+        <p>Используйте шкалу внизу, стрелки по бокам и колесо мыши для навигации.</p>
+      </article>
+
+      <article class="guide-card">
+        <div class="guide-icon">🖼️</div>
+        <h2>Что смотреть</h2>
+        <p>В карточках событий — изображения, пояснения и контекст каждого этапа.</p>
+      </article>
+    </div>
+  </section>
+
   <!-- TimelineJS разместит события в этом контейнере -->
-  <div id="timeline-embed"></div>
+  <main class="timeline-frame">
+    <div class="timeline-card">
+      <div id="timeline-embed"></div>
+    </div>
+  </main>
 
   <footer class="page-footer">
-    Timeline · An interactive visual story
+    <strong>От ЭВМ к AI</strong> · Timeline · An interactive visual story
   </footer>
 
   <!-- 5. Библиотека TimelineJS -->
@@ -205,7 +476,9 @@
 
     const options = {
       initial_zoom: 2,
-      language: "en"
+      language: "en",
+      timenav_height: 180,
+      timenav_height_min: 140
     };
 
     const timeline = new TL.Timeline(
@@ -216,4 +489,3 @@
   </script>
 </body>
 </html>
-```
