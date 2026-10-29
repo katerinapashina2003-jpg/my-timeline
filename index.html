@@ -136,6 +136,48 @@
     padding: 14px !important;
   }
 }
+      /* --- Адаптация изображений в таймлайне --- */
+#timeline-embed .tl-media img,
+#timeline-embed .tl-media .tl-media-image {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  border-radius: 14px !important;
+  box-shadow: 0 12px 30px rgba(38, 52, 69, 0.12) !important;
+}
+
+#timeline-embed .tl-media {
+  overflow: hidden !important; /* чтобы картинка не вылезала за скругления */
+}
+
+@media (max-width: 900px) {
+  #timeline-embed .tl-media {
+    padding: 0 !important;
+    min-height: 240px !important;
+  }
+
+  #timeline-embed .tl-slide-content {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  #timeline-embed .tl-text,
+  #timeline-embed .tl-media {
+    width: 100% !important;
+    flex: 0 0 auto !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #timeline-embed .tl-media {
+    min-height: 200px !important;
+  }
+
+  #timeline-embed .tl-media img {
+    border-radius: 12px !important;
+  }
+}
+
   <style>
     * {
       box-sizing: border-box;
